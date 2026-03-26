@@ -2,7 +2,9 @@ import os
 try:
     from CoolProp.CoolProp import PropsSI
 except:
+    print('缺少运行必需的依赖，开始安装...')
     os.system("pip install CoolProp")
+    from CoolProp.CoolProp import PropSI
 
 
 while True:
