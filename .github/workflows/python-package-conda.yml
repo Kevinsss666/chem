@@ -18,6 +18,10 @@
           with:
             python-version: "3.11"
 
+        - name: Show files
+          run: |
+            Get-ChildItem -Recurse
+
         - name: Install dependencies
           run: |
             python -m pip install --upgrade pip
@@ -26,10 +30,25 @@
 
         - name: Build exe
           run: |
-            pyinstaller --onefile --name heat_transfer heat_transfer.py
+            if (Test-Path heat_transfer.py) {
+              pyinstaller --onefile --name heat_transfer heat_transfer.py
+            } elseif (Test-Path src/heat_transfer.py) {
+              pyinstaller --onefile --name heat_transfer src/heat_transfer.py
+            } elseif (Test-Path python/heat_transfer.py) {
+              pyinstaller --onefile --name heat_transfer python/heat_transfer.py
+            } elseif (Test-Path heat_transfer/heat_transfer.py) {
+              pyinstaller --onefile --name heat_transfer heat_transfer/heat_transfer.py
+            } else {
+              Write-Error "找不到 heat_transfer.py，请检查仓库里的实际路径"
+            }
+
+        - name: Show dist
+          run: |
+            if (Test-Path dist) { Get-ChildItem dist -Recurse }
 
         - name: Upload exe
           uses: actions/upload-artifact@v4
           with:
             name: windows-exe
             path: dist/*.exe
+
