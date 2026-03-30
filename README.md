@@ -1,6 +1,6 @@
 # Chem
 ## Heat Transfer
-### Start
+### How to start
 - Windows：现已更新`heat_transfer.exe`Windows可执行文件，直接下载，双击运行。
 - Mac：现已更新`heat_transfer`Unix可执行文件，直接下载，双击运行。
 ### Notice
